@@ -1,0 +1,16 @@
+welcome: "Welcome to the Cal-cu-la-tor! Enter your name:"
+valid_name: "Make sure to use a valid name."
+first: "What's the first number?"
+invalid_number: "Hmm that doesn't look like a valid number"
+second_number: "What's the second number?"
+# operator_prompt: "<<-MSG
+#     What operation would you like to perform? 
+#     1) Add 
+#     2) Subtract 
+#     3) Multiply 
+#     4) Divide
+#   MSG"
+operator_err: "Must choose 1, 2, 3 or 4"
+
+again: "Would you like to perform another calculation? (enter Y to calculate again)"
+thanks: "Thanks for using cal-cu-la-tor"
