@@ -19,28 +19,26 @@ def alternate_player(current_player)
   current_player
 end
 
-def deal_cards(player, dealer, deck)
-  player_hand << deck.shift
-player gets a card from the starter deck
-  pick a random card
-  remove it from the starter deck
-  add it to the players hand
-  display the players hand
-the dealer gets a card from the updated deck
-  pick a random card from the 51 remaining cards 
-  add it ot the dealers hand
-  reveal the dealers hand to the player 
-player gets a card from the updated deck
-  pick a random card from the 50 remaining cards 
-  add it to the players hand
-  calculate the value of the cards
-  display the players hand
-the dealer gets a card from the updated deck
-  pick a random card from the 49 remaining cards 
-  add it to the dealers hand
-  calculate the value of the cards
-  reveal ONLY the first card in the dealers hand
-end
+# player gets a card from the starter deck
+#   pick a random card
+#   remove it from the starter deck
+#   add it to the players hand
+#   display the players hand
+# the dealer gets a card from the updated deck
+#   pick a random card from the 51 remaining cards 
+#   add it ot the dealers hand
+#   reveal the dealers hand to the player 
+# player gets a card from the updated deck
+#   pick a random card from the 50 remaining cards 
+#   add it to the players hand
+#   calculate the value of the cards
+#   display the players hand
+# the dealer gets a card from the updated deck
+#   pick a random card from the 49 remaining cards 
+#   add it to the dealers hand
+#   calculate the value of the cards
+#   reveal ONLY the first card in the dealers hand
+# end
 
 
 def hand_total(hand)

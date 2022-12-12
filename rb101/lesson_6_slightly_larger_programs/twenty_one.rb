@@ -1,16 +1,5 @@
 require 'pry' 
 
-# 1. Initialize deck  
-# 2. Deal cards to player and dealer
-#   Deal
-# 3. Player turn: hit or stay
-#   - repeat until bust or "stay"
-# 4. If player bust, dealer wins.
-# 5. Dealer turn: hit or stay
-#   - repeat until total >= 17
-# 6. If dealer bust, player wins.
-# 7. Compare cards and declare winner.
-
 def prompt(msg)
   puts "==> #{msg}"
 end
@@ -45,6 +34,48 @@ def deal_cards(deck, current_player, p_hand, d_hand)
   end
 end 
 
+def hand_total(hand)
+  values = hand.map { |card| card[0] }
+  
+  hand_total = 0
+  values.each do |val|
+    if val == "A"
+      hand_total += 11
+    elsif val.start_with?("J", "Q", "K")
+      hand_total += 10
+    else
+      hand_total += val.to_i
+    end
+  end
+
+  values.select { |value| value == "A"}.count.times do 
+    hand_total -= 10 if hand_total > 21
+  end
+
+  hand_total
+end
+
+def bust?(hand)
+  return true if hand_total(hand) > 21
+end
+
+def score(player, dealer)
+  player_score = hand_total(player)
+  dealer_score = hand_total(dealer)
+  prompt "Player score: #{player_score}"
+  prompt "Dealer score: #{dealer_score}"
+end
+
+def winner(player, dealer)
+  if hand_total(player) > hand_total(dealer)
+    prompt "You win!"
+  elsif hand_total(player) < hand_total(dealer)
+    prompt "Dealer wins"
+  else
+    prompt "It's a tie!"
+  end
+end
+
 deck = starter_deck(cards, suits)
 
 player_cards = []
@@ -61,18 +92,35 @@ end
 
 prompt "Here are your cards: #{player_cards}"
 prompt "Here is one of the dealer cards: #{dealer_cards[0]}"
-prompt "Player choice: enter 'h' to HIT or 's' to STAY"
-answer = gets.chomp
 
-# The player can continue to hit as many times as they want. The turn is over when the player either busts or stays. If the player busts, the game is over and the dealer won.
+answer = nil
+loop do 
+  prompt "Player choice: enter 'h' to HIT or 's' to STAY"
+  answer = gets.chomp
+  break if answer.start_with?('s') || bust?(player_cards)
+  deal_cards(deck, current_player, player_cards, dealer_cards)
+  break if bust?(player_cards)
+  prompt "Here are your cards: #{player_cards}"
+end
 
+if bust?(player_cards)
+  prompt "Here are your cards: #{player_cards}"
+  prompt "You bust, dealer wins!"
+else
+  prompt "You choose to stay!"
+  current_player = alternate_player(current_player)
+  prompt "Dealer's turn"
 
-# if answer.start_with?('h')
-#   deal_cards(deck, current_player, player_cards, dealer_cards)
-#   current_player = alternate_player(current_player)
-# else 
-#   current_player = alternate_player(current_player)
-# end
-
-# prompt "Here are your cards: #{player_cards}"
-# prompt "Here is one of the dealer cards: #{dealer_cards[0]}"
+  loop do 
+    break if hand_total(dealer_cards) >= 17 || bust?(dealer_cards)
+    deal_cards(deck, current_player, player_cards, dealer_cards)
+  end
+  
+  if bust?(dealer_cards)
+    prompt "Here are the Dealer cards: #{dealer_cards}"
+    prompt "Dealer busts, you win!"
+  else
+    score(player_cards, dealer_cards)
+    winner(player_cards, dealer_cards)
+  end
+end
