@@ -12,7 +12,7 @@ class Cat
   end
 
   def personal_greeting
-    puts "Hello, I'm a kitty cat named #{@name}!"
+    puts "Hello, I'm a kitty cat named #{name}!"
   end
   
 end
