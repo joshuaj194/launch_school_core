@@ -1,37 +1,37 @@
-def RomanNumeral
+class RomanNumeral
 
-  ROMAN_NUMERALS = {
-    "M" => 1000,
-    "CM" => 900,
-    "D" => 500,
-    "CD" => 400,
-    "C" => 100,
-    "XC" => 90,
-    "L" => 50,
-    "XL" => 40,
-    "X" => 10,
-    "IX" => 9,
+  attr_reader :modern_num
+
+  NUMERALS = {
+    "I" => 1,
     "V" => 5,
-    "IV" => 4,
-    "I" => 1
+    "X" => 10,
+    "C" => 50,
+    "M" => 100,
+    "D" => 500,
+    "M" => 1000
   }
-  
-  def initialize(digit)
-    @modern_numeral = digit
+
+  def initialize(val)
+    @modern_num = val
+  end
+
+  def transform_modern
+    arr = []
+    multiplier = 1
+    modern_num.digits.each do |digit|
+      arr << digit * multiplier
+      multiplier *= 10
+    end
+    arr
   end
 
   def to_roman
-    roman = ''
-    arr = self.process
-
+    str = ""
+    transform_modern.reverse_each do |num|
+      str += NUMERALS.key(num)
+    end
+    str
   end
 
-  def process
-    arr = []
-    start = 1
-    @modern_numeral.digits.each do |digit|
-      arr << digit * start
-      start *= 10
-    end
-    arr
 end
